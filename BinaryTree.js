@@ -1,8 +1,8 @@
-import usuarios from './usuarios.json'
+import usuarios from './usuarios'
 
 class Node {
-    constructor(valor){
-        this.valor = valor;
+    constructor(user){
+        this.user = user;
         this.izquierda = null;
         this.derecha = null;
     }
@@ -12,15 +12,18 @@ class BinaryTree{
         this.root = null;
     }
 
-    insertar(valor){
-        const newNode = new Node(valor);
+    insertar(user){
+        const newNode = new Node(user);
         if(this.root === null){
             this.root = newNode;
         } else {
             let currentNode = this.root;
 
             while(true){
-                if(valor < currentNode.valor){
+                if(user.id === currentNode.user.id){
+                    return "Ya existe uno con ese id";
+                }
+                if(user.id < currentNode.user.id){
                     if(currentNode.izquierda === null){
                         currentNode.izquierda = newNode;
                         return true;
@@ -37,21 +40,13 @@ class BinaryTree{
             }
         }
     }
-    verValor(){
-        return this.root;
-    }
-
-    buscar(valor){
+    buscar(id){
         let currentNode = this.root;
 
         while(currentNode !== null){
-            if(valor === currentNode.valor){
-                console.log(currentNode.valor);
-                currentNode = currentNode.derecha;
-                if(currentNode === null){
-                    return true;
-                }
-            } else if(valor < currentNode.valor){
+            if(id === currentNode.user.id){
+                return currentNode.user;
+            } else if(id < currentNode.user.id){
                 currentNode = currentNode.izquierda;
             } else {
                 currentNode = currentNode.derecha;
@@ -64,8 +59,6 @@ class BinaryTree{
 
 const tree = new BinaryTree();
 //Agregamos a los usuarios.
-for(let i = 1; i < 8; i++){
-    tree.insertar(usuarios.Usuarios.find(usuario => usuario.id === i));
+for(let i = 1; i < usuarios.users.length; i++){
+    tree.insertar(usuarios.users[i]);
 }
-
-tree.buscar(2);
