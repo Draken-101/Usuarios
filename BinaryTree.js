@@ -1,4 +1,3 @@
-import usuarios from './usuarios'
 
 class Node {
     constructor(user){
@@ -58,7 +57,9 @@ class BinaryTree{
 
 
 const tree = new BinaryTree();
+
+const usuarios = `usuarios`;
 //Agregamos a los usuarios.
-for(let i = 1; i < usuarios.users.length; i++){
-    tree.insertar(usuarios.users[i]);
+for(let i = 1; i < u.length; i++){
+    tree.insertar(u[i]);
 }
