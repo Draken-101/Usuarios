@@ -50,9 +50,61 @@ class BinaryTree{
                 currentNode = currentNode.derecha;
             }
         }
-        return false;
+        return "No encontrado";
     }
 
+    borrar(id) {
+        this.root = this.borrarNodo(this.root, id);
+    }
+
+    borrarNodo(root, id) {
+        if (root === null)
+            return null;
+
+        if (id < root.user.id) {
+            root.izquierda = this.borrarNodo(root.izquierda, id);
+        } else if (id > root.user.id) {
+            root.derecha = this.borrarNodo(root.derecha, id);
+        } else {
+            if (root.izquierda === null) {
+                return root.derecha;
+            } else if (root.derecha === null) {
+                return root.izquierda;
+            }
+
+            const sucesor = this.encontrarMinimo(root.derecha);
+            root.user = sucesor.user;
+            root.derecha = this.borrarNodo(root.derecha, sucesor.user.id);
+        }
+
+        return root;
+    }
+
+    encontrarMinimo(root) {
+        while (root.izquierda !== null) {
+            root = root.izquierda;
+        }
+        return root;
+    }
+
+    modificarUsuario(id, nuevoUsuario) {
+        this.root = this._modificarUsuario(this.root, id, nuevoUsuario);
+    }
+
+    _modificarUsuario(root, id, nuevoUsuario) {
+        if (root === null)
+            return null;
+
+        if (id < root.user.id) {
+            root.izquierda = this._modificarUsuario(root.izquierda, id, nuevoUsuario);
+        } else if (id > root.user.id) {
+            root.derecha = this._modificarUsuario(root.derecha, id, nuevoUsuario);
+        } else {
+            root.user = nuevoUsuario;
+        }
+
+        return root;
+    }
 
     verArbol(){
         return this.root;
@@ -79,3 +131,19 @@ usuarios.forEach((usuario) => {
 console.log(tree.insertar(newUser));
 console.log(tree.buscar(6));
 
+tree.borrar(6);
+
+console.log(tree.buscar(6));
+console.log(tree.buscar(7));
+
+const UsuarioModificado = {
+    "id" : 1,
+    "usuario" : "NuevoUsuario123",
+    "password" : "nuevacontraseña",
+    "nombre" : "NuevoNombre",
+    "apellidos" : "NuevoApellido"
+};
+
+tree.modificarUsuario(1, UsuarioModificado);
+
+console.log(tree.buscar(1));
