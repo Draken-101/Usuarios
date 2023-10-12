@@ -1,4 +1,3 @@
-
 class Node {
     constructor(user){
         this.user = user;
@@ -53,13 +52,30 @@ class BinaryTree{
         }
         return false;
     }
+
+
+    verArbol(){
+        return this.root;
+    }
 }
 
+const usuarios = require('./usuarios.json');
 
 const tree = new BinaryTree();
 
-const usuarios = `usuarios`;
-//Agregamos a los usuarios.
-for(let i = 1; i < u.length; i++){
-    tree.insertar(u[i]);
-}
+const newUser = {
+    "id" : 1,
+    "usuario" : "Jojojojo11",
+    "password" : "12345",
+    "nombre" : "Juan",
+    "apellidos" : "Orgado Tello"
+};
+
+usuarios.forEach((usuario) => {
+    tree.insertar(usuario);
+});
+
+
+console.log(tree.insertar(newUser));
+console.log(tree.buscar(6));
+
